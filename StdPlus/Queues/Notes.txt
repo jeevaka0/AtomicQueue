@@ -1,0 +1,114 @@
+atomic readLines with memory_order_relaxed
+
+Dump of assembler code for function StdPlus::SharedQueue::finishRead():
+   0x00005555555c6fd0 <+0>:	mov    rdx,QWORD PTR [rdi+0x48]
+   0x00005555555c6fd4 <+4>:	mov    rsi,QWORD PTR [rdi+0x20]
+   0x00005555555c6fd8 <+8>:	mov    eax,DWORD PTR [rdx-0x8]
+   0x00005555555c6fdb <+11>:	add    eax,0x7
+   0x00005555555c6fde <+14>:	shr    eax,0x6
+   0x00005555555c6fe1 <+17>:	add    eax,0x1
+   0x00005555555c6fe4 <+20>:	mov    ecx,eax
+   0x00005555555c6fe6 <+22>:	shl    ecx,0x6
+   0x00005555555c6fe9 <+25>:	add    rdx,rcx
+   0x00005555555c6fec <+28>:	xor    ecx,ecx
+   0x00005555555c6fee <+30>:	mov    QWORD PTR [rdi+0x48],rdx
+   0x00005555555c6ff2 <+34>:	cmp    rdx,rsi
+   0x00005555555c6ff5 <+37>:	jbe    0x5555555c7011 <StdPlus::SharedQueue::finishRead()+65>
+=> 0x00005555555c6ff7 <+39>:	sub    rdx,rsi
+   0x00005555555c6ffa <+42>:	mov    rcx,QWORD PTR [rdi+0x8]
+   0x00005555555c6ffe <+46>:	mov    rsi,QWORD PTR [rdi+0x18]
+   0x00005555555c7002 <+50>:	shr    rdx,0x6
+   0x00005555555c7006 <+54>:	sub    rcx,rdx
+   0x00005555555c7009 <+57>:	lea    rdx,[rsi+0x8]
+   0x00005555555c700d <+61>:	mov    QWORD PTR [rdi+0x48],rdx
+   0x00005555555c7011 <+65>:	mov    rdx,QWORD PTR [rdi+0x40]
+   0x00005555555c7015 <+69>:	add    rcx,rdx
+   0x00005555555c7018 <+72>:	add    rax,rcx
+   0x00005555555c701b <+75>:	mov    QWORD PTR [rdi+0x40],rax
+   0x00005555555c701f <+79>:	ret    
+
+Non atomic readLines
+
+Dump of assembler code for function StdPlus::SharedQueue::finishRead():
+   0x00005555555c6fa0 <+0>:	mov    rdx,QWORD PTR [rdi+0x48]
+   0x00005555555c6fa4 <+4>:	mov    rsi,QWORD PTR [rdi+0x20]
+   0x00005555555c6fa8 <+8>:	mov    eax,DWORD PTR [rdx-0x8]
+   0x00005555555c6fab <+11>:	add    eax,0x7
+   0x00005555555c6fae <+14>:	shr    eax,0x6
+   0x00005555555c6fb1 <+17>:	add    eax,0x1
+   0x00005555555c6fb4 <+20>:	mov    ecx,eax
+   0x00005555555c6fb6 <+22>:	shl    ecx,0x6
+   0x00005555555c6fb9 <+25>:	add    rdx,rcx
+   0x00005555555c6fbc <+28>:	xor    ecx,ecx
+   0x00005555555c6fbe <+30>:	mov    QWORD PTR [rdi+0x48],rdx
+=> 0x00005555555c6fc2 <+34>:	cmp    rdx,rsi
+   0x00005555555c6fc5 <+37>:	jbe    0x5555555c6fe1 <StdPlus::SharedQueue::finishRead()+65>
+   0x00005555555c6fc7 <+39>:	sub    rdx,rsi
+   0x00005555555c6fca <+42>:	mov    rcx,QWORD PTR [rdi+0x8]
+   0x00005555555c6fce <+46>:	mov    rsi,QWORD PTR [rdi+0x18]
+   0x00005555555c6fd2 <+50>:	shr    rdx,0x6
+   0x00005555555c6fd6 <+54>:	sub    rcx,rdx
+   0x00005555555c6fd9 <+57>:	lea    rdx,[rsi+0x8]
+   0x00005555555c6fdd <+61>:	mov    QWORD PTR [rdi+0x48],rdx
+   0x00005555555c6fe1 <+65>:	add    rax,rcx
+   0x00005555555c6fe4 <+68>:	add    QWORD PTR [rdi+0x40],rax
+   0x00005555555c6fe8 <+72>:	ret    
+
+
+
+------------------- Comparison ----------------------
+atomic readLines with memory_order_relaxed
+
+Dump of assembler code for function StdPlus::SharedQueue::getTail() const:
+   0x00005555555c6e10 <+0>:	mov    rax,QWORD PTR [rdi+0x8]
+   0x00005555555c6e14 <+4>:	add    rax,rax
+   0x00005555555c6e17 <+7>:	cmp    QWORD PTR [rdi+0x88],rax
+   0x00005555555c6e1e <+14>:	jae    0x5555555c6e78 <StdPlus::SharedQueue::getTail() const+104>
+   0x00005555555c6e20 <+16>:	mov    rsi,QWORD PTR [rdi+0x10]
+   0x00005555555c6e24 <+20>:	xor    ecx,ecx
+   0x00005555555c6e26 <+22>:	lea    r8,[rdi+0x40]
+   0x00005555555c6e2a <+26>:	test   rcx,rcx
+   0x00005555555c6e2d <+29>:	jne    0x5555555c6e58 <StdPlus::SharedQueue::getTail() const+72>
+   0x00005555555c6e2f <+31>:	add    QWORD PTR [rdi+0x98],0x1
+=> 0x00005555555c6e37 <+39>:	mov    rcx,rsi
+   0x00005555555c6e3a <+42>:	sub    rcx,QWORD PTR [rdi+0x80]
+   0x00005555555c6e41 <+49>:	mov    rdx,QWORD PTR [r8]
+   0x00005555555c6e44 <+52>:	add    rdx,rcx
+   0x00005555555c6e47 <+55>:	mov    QWORD PTR [rdi+0x88],rdx
+   0x00005555555c6e4e <+62>:	cmp    rdx,rax
+   0x00005555555c6e51 <+65>:	jae    0x5555555c6e78 <StdPlus::SharedQueue::getTail() const+104>
+   0x00005555555c6e53 <+67>:	mov    ecx,0x1
+   0x00005555555c6e58 <+72>:	mov    rdx,rsi
+   0x00005555555c6e5b <+75>:	sub    rdx,QWORD PTR [rdi+0x80]
+   0x00005555555c6e62 <+82>:	add    rcx,0x1
+   0x00005555555c6e66 <+86>:	mov    r9,QWORD PTR [r8]
+   0x00005555555c6e69 <+89>:	add    rdx,r9
+   0x00005555555c6e6c <+92>:	mov    QWORD PTR [rdi+0x88],rdx
+   0x00005555555c6e73 <+99>:	cmp    rax,rdx
+   0x00005555555c6e76 <+102>:	ja     0x5555555c6e2a <StdPlus::SharedQueue::getTail() const+26>
+   0x00005555555c6e78 <+104>:	mov    rax,QWORD PTR [rdi+0x90]
+   0x00005555555c6e7f <+111>:	ret    
+
+Non atomic readLines
+
+Dump of assembler code for function StdPlus::SharedQueue::getTail() const:
+   0x00005555555c6e10 <+0>:	mov    rax,QWORD PTR [rdi+0x8]
+   0x00005555555c6e14 <+4>:	lea    rdx,[rax+rax*1]
+   0x00005555555c6e18 <+8>:	cmp    QWORD PTR [rdi+0x88],rdx
+   0x00005555555c6e1f <+15>:	jae    0x5555555c6e59 <StdPlus::SharedQueue::getTail() const+73>
+   0x00005555555c6e21 <+17>:	mov    rax,QWORD PTR [rdi+0x40]
+   0x00005555555c6e25 <+21>:	add    rax,QWORD PTR [rdi+0x10]
+   0x00005555555c6e29 <+25>:	sub    rax,QWORD PTR [rdi+0x80]
+   0x00005555555c6e30 <+32>:	cmp    rax,rdx
+   0x00005555555c6e33 <+35>:	jae    0x5555555c6e4a <StdPlus::SharedQueue::getTail() const+58>
+   0x00005555555c6e35 <+37>:	xor    eax,eax
+   0x00005555555c6e37 <+39>:	test   rax,rax
+   0x00005555555c6e3a <+42>:	jne    0x5555555c6e44 <StdPlus::SharedQueue::getTail() const+52>
+   0x00005555555c6e3c <+44>:	add    QWORD PTR [rdi+0x98],0x1
+   0x00005555555c6e44 <+52>:	add    rax,0x1
+=> 0x00005555555c6e48 <+56>:	jmp    0x5555555c6e37 <StdPlus::SharedQueue::getTail() const+39>
+   0x00005555555c6e4a <+58>:	add    QWORD PTR [rdi+0x98],0x1
+   0x00005555555c6e52 <+66>:	mov    QWORD PTR [rdi+0x88],rax
+   0x00005555555c6e59 <+73>:	mov    rax,QWORD PTR [rdi+0x90]
+   0x00005555555c6e60 <+80>:	ret    
+
